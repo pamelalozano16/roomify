@@ -3,6 +3,8 @@ const router = express.Router();
 const gravatar = require("gravatar");
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 
 const User = require("../../models/user");
 
@@ -65,10 +67,30 @@ router.post(
       await user.save();
 
       //Return jsonwebtoken
-
-      console.log(req.body);
-
-      res.send("User Registered");
+      const payload = {
+        user: {
+          id: user.id, //Object id del user
+        },
+      };
+      /*
+      Estamos haciendo una token donde la info que
+      contiene es el userID q es el payload 
+      para saber cual es el que ingresó, 
+      en config guardamos el secretword,
+      y el expiresIn hace que la moneda no sea
+      valida todo el tiempo.
+      Luego regresamos el token para que
+      cuando se registre el usuario inicie sesion
+      */
+      jwt.sign(
+        payload,
+        config.get("jwtToken"),
+        { expiresIn: 360000 },
+        (err, token) => {
+          if (err) throw err;
+          res.json({ token });
+        }
+      );
     } catch (err) {
       // console.error(err.message);
       res.status(400).send("Server error");

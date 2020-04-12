@@ -1,3 +1,5 @@
 {
-  "mongoURI": "mongodb+srv://dbPrueba:Pammap99*@cluster0-viegr.mongodb.net/devConnection?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://dbPrueba:Pammap99*@cluster0-viegr.mongodb.net/devConnection?retryWrites=true&w=majority",
+
+  "jwtToken": "01122014"
 }
