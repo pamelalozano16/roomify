@@ -8,7 +8,10 @@ const config = require("config");
 
 const User = require("../../models/user");
 
-//@desc Test route
+//@route POST api/users
+//@desc REGISTER and authenticate user & get token
+//@access Public
+
 router.post(
   "/", //Path es /
   [
