@@ -1,0 +1,3 @@
+cd C:\Users\practicantes.efn\mongodb\bin
+
+mongod.exe --dbpath=C:\Users\practicantes.efn\mongodb-data
