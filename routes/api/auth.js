@@ -5,6 +5,14 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const auth = require("../../middleware/auth");
+const axios = require('axios');
+const qs = require('qs');
+var SpotifyWebApi = require('spotify-web-api-node');
+
+
+  const clientId= config.get("spotifyClientId");
+  const clientSecret= config.get("spotifyClientSecret");
+
 
 //@route GET api/auth
 //@desc Verifies and returns user
@@ -84,5 +92,48 @@ router.post(
     }
   }
 );
+
+//@route GET api/auth/spotify
+//@desc LOGIN with spotify
+//@access Public
+router.get('/spotifySuccess', async(req, res) => {
+
+  var data = qs.stringify({
+   'grant_type': 'authorization_code',
+   'code': req.query.code,
+   'redirect_uri': 'http://localhost:5000/api/auth/spotifySuccess' 
+  });
+
+  var config = {
+    method: 'post',
+    url: 'https://accounts.spotify.com/api/token',
+    headers: { 
+      'Authorization': 'Basic ' + Buffer.from(`${clientId}:${clientSecret}`).toString('base64') , 
+      'Content-Type': 'application/x-www-form-urlencoded', 
+    },
+    data : data
+  };
+
+  try {
+    let response = await axios(config);
+    res.send(response.data);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+
+});
+
+//@route GET api/auth/spotify
+//@desc LOGIN with spotify
+//@access Public
+router.get('/spotify', function(req, res) {
+  var scopes = 'user-read-private user-read-email';
+  res.redirect('https://accounts.spotify.com/authorize' +
+    '?response_type=code' +
+    '&client_id=' + config.get("spotifyClientId") +
+    (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
+    '&redirect_uri=' + encodeURIComponent("http://localhost:5000/api/auth/spotifySuccess"));
+  });
 
 module.exports = router;

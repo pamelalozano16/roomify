@@ -1,5 +1,6 @@
 {
-  "mongoURI": "mongodb+srv://dbPrueba:Pammap99*@cluster0-viegr.mongodb.net/devConnection?retryWrites=true&w=majority",
-
+  "mongoURI": "mongodb+srv://dbPrueba:Pammap99*@cluster0-viegr.mongodb.net/roomify?retryWrites=true&w=majority",
+  "spotifyClientId": "e1cea386be574842887095c9d756e0d9",
+  "spotifyClientSecret": "73e22a1f7c6a46a3ac04e8f044ceb881",
   "jwtToken": "01122014"
 }

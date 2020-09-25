@@ -2,9 +2,9 @@ import React, { Fragment, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { login } from "../../actions/auth";
+import { login} from "../../actions/auth";
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated}) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -55,6 +55,7 @@ const Login = ({ login, isAuthenticated }) => {
         </div>
 
         <input type="submit" className="btn btn-primary" value="Login" />
+        <button type="button"><a href="http://localhost:5000/api/auth/spotify">Activate Lasers</a></button>
       </form>
       <p className="my-1">
         Dont have an account? <Link to="/register">Sign Up</Link>

@@ -4,6 +4,7 @@ import {
   USER_LOADED,
   AUTH_ERROR,
   LOGIN_FAIL,
+  LOGIN_SPOTIFY_SUCCESS,
   LOGIN_SUCCESS,
   LOGOUT,
 } from "../actions/types";
@@ -43,6 +44,14 @@ export default function (state = initialState, action) {
         ...state,
         token: null,
         isAuthenticated: false,
+        loading: false,
+      };
+    case LOGIN_SPOTIFY_SUCCESS:
+      localStorage.setItem("token_spotify", payload.access_token);
+      return {
+        ...state,
+        ...payload,
+        isAuthenticated: true,
         loading: false,
       };
     default:
