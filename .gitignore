@@ -2,3 +2,4 @@ node_modules/
 client/node_modules
 config/default.json
 config/.DS_Store
+.DS_Store

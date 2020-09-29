@@ -9,8 +9,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_SPOTIFY_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT,
-  CLEAR_PROFILE,
+  LOGOUT
 } from "./types";
 
 //Load User
