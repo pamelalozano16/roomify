@@ -1,15 +1,39 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { login} from "../../actions/auth";
+import { login, loginSpotify} from "../../actions/auth";
 
-const Login = ({ login, isAuthenticated}) => {
+const Login = ({ login, isAuthenticated, loginSpotify}) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const { email, password } = formData;
+
+  const getCode = async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    console.log(code);
+    if(code!=null){
+      let res = await fetch('http://localhost:5000/api/auth/spotifySuccess?code='+code);
+      let resJson = await res.json();
+      loginSpotify(resJson);
+    }
+  }
+
+  useEffect(() => {
+    getCode();
+  }, []);
+
+  const loginButton = () => {
+    var scopes = 'user-read-private user-read-email';
+    window.location.replace('https://accounts.spotify.com/authorize' +
+    '?response_type=code' +
+    '&client_id=' + 'e1cea386be574842887095c9d756e0d9' +
+    (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
+    '&redirect_uri=' + encodeURIComponent('http://localhost:3000/login'));
+  }
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -55,7 +79,7 @@ const Login = ({ login, isAuthenticated}) => {
         </div>
 
         <input type="submit" className="btn btn-primary" value="Login" />
-        <button type="button"><a href="http://localhost:5000/api/auth/spotify">Activate Lasers</a></button>
+        <button type="button" onClick={loginButton}>Activate Lasers</button>
       </form>
       <p className="my-1">
         Dont have an account? <Link to="/register">Sign Up</Link>
@@ -66,6 +90,7 @@ const Login = ({ login, isAuthenticated}) => {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
+  loginSpotify: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
 };
 
@@ -73,4 +98,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated, //En reducer index
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login, loginSpotify })(Login);

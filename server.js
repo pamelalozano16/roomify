@@ -1,9 +1,12 @@
 const express = require("express");
+const cors = require('cors');
 const connectDB = require("./config/db");
 const Profile = require("./models/Profile");
 const User = require("./models/User");
+ 
 
 const app = express();
+app.use(cors());
 
 //Connect Database
 connectDB();
@@ -18,6 +21,7 @@ app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/profile", require("./routes/api/profile"));
 app.use("/api/posts", require("./routes/api/posts"));
+app.use("/api/spotify", require("./routes/api/spotify"));
 
 const PORT = process.env.PORT || 5000;
 

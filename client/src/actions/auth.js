@@ -90,6 +90,18 @@ export const login = (email, password) => async (dispatch) => {
 
 //Logout / Clear profile
 export const logout = () => (dispatch) => {
-  dispatch({ type: CLEAR_PROFILE });
   dispatch({ type: LOGOUT });
 };
+
+export const loginSpotify = (response) => async (dispatch) =>{
+  const res = await axios.get("/api/spotify/getMe?token="+response.access_token);
+  console.log(res.data);
+  dispatch({
+    type: USER_LOADED,
+    payload: res.data
+  });
+  dispatch({
+    type:LOGIN_SPOTIFY_SUCCESS,
+    payload:response
+  })
+}

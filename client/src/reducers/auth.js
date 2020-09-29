@@ -14,6 +14,11 @@ const initialState = {
   isAuthenticated: null,
   loading: true,
   user: null,
+  access_token: localStorage.getItem("token_spotify"),
+  token_type: null,
+  expires_in: null,
+  refresh_token: null,
+  scope: null,
 };
 
 export default function (state = initialState, action) {
@@ -40,11 +45,17 @@ export default function (state = initialState, action) {
     case REGISTER_FAIL:
     case AUTH_ERROR:
       localStorage.removeItem("token");
+      localStorage.removeItem("token_spotify");
       return {
         ...state,
         token: null,
         isAuthenticated: false,
         loading: false,
+        user: null,
+        token_type: null,
+        expires_in: null,
+        refresh_token: null,
+        scope: null,
       };
     case LOGIN_SPOTIFY_SUCCESS:
       localStorage.setItem("token_spotify", payload.access_token);
