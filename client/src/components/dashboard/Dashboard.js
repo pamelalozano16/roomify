@@ -1,13 +1,23 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useEffect, Fragment} from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../layout/Spinner";
+import {loadCurrentSong, setTimerId} from "../../actions/spotify";
 
 const Dashboard = ({
   auth: { user, loading },
+  loadCurrentSong,
+  setTimerId
 }) => {
-
+  var timerId;
+  const playbackState = () => {
+    loadCurrentSong();
+    timerId = setTimeout(playbackState, 5000); 
+    // TO DO : turn of timer after log out change function to auth actions
+  }
+  useEffect(()=>{setTimerId(timerId);}, [])
+  playbackState();
   return loading === true ? (
     <Spinner />
   ) : (
@@ -17,17 +27,22 @@ const Dashboard = ({
         <i className="fas fa-user"></i>
         &nbsp; Welcome {user.display_name}
       </p>
-        <Fragment>HAS</Fragment>
+        <Fragment>
+        Player:
+
+        </Fragment>
     </Fragment>
   );
 };
 
 Dashboard.propTypes = {
   auth: PropTypes.object.isRequired,
+  loadCurrentSong: PropTypes.func.isRequired,
+  setTimerId: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { })(Dashboard);
+export default connect(mapStateToProps, {loadCurrentSong, setTimerId})(Dashboard);

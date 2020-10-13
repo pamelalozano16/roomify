@@ -27,7 +27,7 @@ const Login = ({ login, isAuthenticated, loginSpotify}) => {
   }, []);
 
   const loginButton = () => {
-    var scopes = 'user-read-private user-read-email';
+    var scopes = 'user-read-private user-read-email user-read-playback-state streaming';
     window.location.replace('https://accounts.spotify.com/authorize' +
     '?response_type=code' +
     '&client_id=' + 'e1cea386be574842887095c9d756e0d9' +
