@@ -9,3 +9,9 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
 export const LOGIN_SPOTIFY_SUCCESS = "LOGIN_SPOTIFY_SUCCESS";
 export const CLEAR_PROFILE = "CLEAR_PROFILE";
+export const PAUSE = "PAUSE";
+export const PLAY = "PLAY";
+export const SONG_SKIPPED = "CLEAR_PROFILE";
+export const SONG_OVER = "SONG_OVER";
+export const TIMER_RUNNING = "TIMER_RUNNING";
+

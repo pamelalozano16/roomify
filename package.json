@@ -24,7 +24,11 @@
     "mongoose": "^5.9.7",
     "nodemon": "^2.0.3",
     "qs": "^6.9.4",
+    "react-load-script": "0.0.6",
+    "react-spotify-web-playback": "^0.7.0",
     "request": "^2.88.2",
+    "socket.io": "^2.3.0",
+    "spotify-connect-ws": "^0.1.1",
     "spotify-web-api-node": "^4.0.0"
   }
 }
